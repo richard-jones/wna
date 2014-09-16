@@ -1,18 +1,19 @@
 from setuptools import setup, find_packages
 
 setup(
-    name = 'YOURAPP',
+    name = 'WNA',
     version = '1.0.0',
     packages = find_packages(),
     install_requires = [
         "portality==2.0.0",
         "esprit",
-        "Flask"
+        "Flask",
+        "beautifulsoup4"
     ],
     url = 'http://cottagelabs.com/',
     author = 'Cottage Labs',
     author_email = 'us@cottagelabs.com',
-    description = 'DESCRIBE YOUR APP',
+    description = 'World Nuclear Association demo reactor database',
     classifiers = [
         'Development Status :: 3 - Alpha',
         'Environment :: Console',

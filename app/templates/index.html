@@ -2,6 +2,12 @@
 
 {% block content %}
 
-Hello There
+<div id="search_reactors"></div>
 
 {% endblock %}
+
+{% block extra_js_bottom %}
+<script type="text/javascript" src="{{ url_for('static', filename='js/wna.facetview.theme.js') }}"></script>
+{% endblock%}
+
+
