@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="row-fluid">
+    <div class="span12">
+        <h1>Reactor Start Years</h1>
+        <p>Number of reactors that opened each year</p>
+    </div>
+</div>
+<div class="row-fluid">
+    <div class="span12"><div id="reportview-start-years"></div></div>
+</div>
+
+
+
+{% endblock %}
+
+{% block extra_js_bottom %}
+<script type="text/javascript" src="{{ url_for('static', filename='js/wna.reportview.js') }}"></script>
+{% endblock%}
+
+

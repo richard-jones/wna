@@ -4,6 +4,7 @@ from flask.views import View
 
 from portality.core import app
 from portality.lib.webapp import custom_static
+from portality.runner import start_from_main
 
 from portality.modules.es.query import blueprint as query
 app.register_blueprint(query, url_prefix='/query')
@@ -12,6 +13,9 @@ app.register_blueprint(query, url_prefix='/query')
 def root():
     return render_template("index.html")
 
+@app.route("/stats")
+def stats():
+    return render_template("stats.html")
 
 # this allows us to override the standard static file handling with our own dynamic version
 @app.route("/static/<path:filename>")
@@ -24,7 +28,8 @@ def page_not_found(e):
 
 
 if __name__ == "__main__":
-    import pydevd
-    pydevd.settrace('localhost', port=51234, stdoutToServer=True, stderrToServer=True)
-    app.run(host=app.config.get("HOST", "0.0.0.0"), debug=False, port=app.config.get("PORT", 5000), threaded=False)
+    #import pydevd
+    #pydevd.settrace('localhost', port=51234, stdoutToServer=True, stderrToServer=True)
+    #app.run(host=app.config.get("HOST", "0.0.0.0"), debug=False, port=app.config.get("PORT", 5000), threaded=False)
+    start_from_main(app)
 

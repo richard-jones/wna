@@ -25,7 +25,7 @@ jQuery(document).ready(function($) {
     }
 
     var facets = []
-    facets.push({'field': 'start_year.exact', 'display': 'Start Year'})
+    facets.push({'field': 'start_year', 'display': 'Start Year'})
     facets.push({'field': 'process.exact', 'display': 'Process'})
     facets.push({'field': 'owner.exact', 'display': 'Owner'})
     facets.push({'field': 'vendor.exact', 'display': 'Vendor'})
@@ -43,7 +43,7 @@ jQuery(document).ready(function($) {
 
     $('#search_reactors').facetview({
         debug: false,
-        search_url : current_scheme + "//" + current_domain + "/user_query/reactor/_search",
+        search_url : current_scheme + "//" + current_domain + "/query/reactor/_search",
         page_size : 25,
         facets : facets,
         search_sortby : [
