@@ -4,3 +4,24 @@
 #reportview-start-years .reportview {
     height: 465px;
 }
+
+#reportview-owner-operator {
+    height:500px;
+}
+#reportview-owner-operator .reportview {
+    height: 465px;
+}
+
+#reportview-top-countries {
+    height:500px;
+}
+#reportview-top-countries .reportview {
+    height: 465px;
+}
+
+#reportview-top-models {
+    height:500px;
+}
+#reportview-top-models .reportview {
+    height: 465px;
+}
