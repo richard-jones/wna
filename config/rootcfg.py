@@ -3,6 +3,7 @@ CONFIG_FILES = [
     "portentious/portality/config/webapp.py",
     "portentious/portality/modules/sherpafact/settings.py",
     "portentious/portality/modules/es/settings.py",
+    "portentious/portality/config/googlemap.py",
     "config/wna.py",
     "config/dev.py",
     "local.cfg"

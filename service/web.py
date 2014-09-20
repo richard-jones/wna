@@ -5,6 +5,7 @@ from flask.views import View
 from portality.core import app
 from portality.lib.webapp import custom_static
 from portality.runner import start_from_main
+from service import models
 
 from portality.modules.es.query import blueprint as query
 app.register_blueprint(query, url_prefix='/query')
@@ -16,6 +17,15 @@ def root():
 @app.route("/stats")
 def stats():
     return render_template("stats.html")
+
+@app.route("/reactor/<reactor_id>")
+def reactor(reactor_id):
+    r = models.Reactor.pull(reactor_id)
+    return render_template("reactor.html", reactor=r, map_key=app.config.get("GOOGLE_MAP_API_KEY"))
+
+@app.route("/map")
+def map():
+    return render_template("map.html", map_key=app.config.get("GOOGLE_MAP_API_KEY"))
 
 # this allows us to override the standard static file handling with our own dynamic version
 @app.route("/static/<path:filename>")
