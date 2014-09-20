@@ -1,4 +1,4 @@
-import requests, re, time, esprit
+import requests, re, time, esprit, uuid
 from bs4 import BeautifulSoup
 from portality.core import app
 from datetime import datetime
@@ -163,7 +163,8 @@ for stn in stns:
     if i > limit:
         break
     mine_page(stn)
-    esprit.raw.store(es_conn, "reactor", stn)
+    stn["id"] = uuid.uuid4().hex
+    esprit.raw.store(es_conn, "reactor", stn, id=stn["id"])
 
 
 

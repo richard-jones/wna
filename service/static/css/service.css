@@ -1,3 +1,10 @@
+#navigation {
+    background: rgb(51, 128, 182);
+    color: white;
+    height: 40px;
+}
+
+
 #reportview-start-years {
     height:500px;
 }
