@@ -8,7 +8,7 @@ es_url = "http://localhost:9200/"
 es_index = "wna"
 es_conn = esprit.raw.Connection(es_url, es_index)
 
-list_page = "WNA Reactor Database.html"
+list_page = "service/scripts/WNA Reactor Database.html"
 f = open(list_page)
 listsoup = BeautifulSoup(f.read())
 f.close()
