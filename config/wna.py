@@ -1,4 +1,4 @@
-ELASTIC_SEARCH_HOST = "http://localhost:9200"
+ELASTIC_SEARCH_HOST = "http://ooz.cottagelabs.com:9200"
 ELASTIC_SEARCH_INDEX = "wna"
 
 from esprit import mappings

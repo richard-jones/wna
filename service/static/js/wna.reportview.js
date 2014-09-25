@@ -104,7 +104,7 @@ jQuery(document).ready(function($) {
         facets: [
             {
                 "field" : "country.exact",
-                "size" : 10,
+                "size" : 100,
                 "display" : "Coutries with Reactors"
             }
         ]

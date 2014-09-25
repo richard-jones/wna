@@ -10,13 +10,6 @@ jQuery(document).ready(function($) {
         }
         var map = new google.maps.Map(document.getElementById("map-canvas"), mapOptions);
         return map
-
-        // To add the marker to the map, use the 'map' property
-        //var marker = new google.maps.Marker({
-        //    position: myLatlng,
-        //    map: map,
-        //    title:""
-        //});
     }
     var gm = initialize();
 

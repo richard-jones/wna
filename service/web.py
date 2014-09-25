@@ -27,6 +27,10 @@ def reactor(reactor_id):
 def map():
     return render_template("map.html", map_key=app.config.get("GOOGLE_MAP_API_KEY"))
 
+@app.route("/country/<country>")
+def nation(country):
+    return render_template("country.html", country=country, map_key=app.config.get("GOOGLE_MAP_API_KEY"))
+
 # this allows us to override the standard static file handling with our own dynamic version
 @app.route("/static/<path:filename>")
 def static(filename):
