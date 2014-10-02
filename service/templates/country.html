@@ -2,11 +2,39 @@
 
 {% block content %}
 
-<h1>{{country}}</h1>
+<div class="row-fluid">
+    <div class="span12">
+        <div class="hero-unit">
+            <div class="row-fluid">
+                <div class="span6"><h1>{{country}}</h1></div>
+                <div class="span6">
+                    <div style="display:none; line-height: 35px" id="stat_display">
+                    <span id='reactor_count' style="font-size: 300%; font-weight: bold">COUNT</span> operational reactors <br>
+                        with a net capacity of <span id='capacity' style="font-size: 300%; font-weight: bold">CAPACITY</span><span style="font-size: 300%; font-weight: bold"> MWe</span><br>
+                    (the smallest being <span id='smallest_capacity' style="font-size: 150%; font-weight: bold">SMALLEST</span> MWe and the largest <span id='largest_capacity' style="font-size: 150%; font-weight: bold">LARGEST</span> MWe)
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
-<div class="row-fluid"><div class="span12"><div id="country_highlight"></div></div></div>
+<div class="row-fluid">
+    <div class="span12">
+        <h1>Number of reactors that opened each year</h1>
+    </div>
+</div>
+<div class="row-fluid" style="margin-bottom: 100px">
+    <div class="span12"><div id="reportview-country-start-years"></div></div>
+</div>
 
-<div class="row-fluid"><div class="span12"><div id="country_reactors"></div></div></div>
+<div class="row-fluid"><div class="span12"><h1>Operational reactors</h1></div></div>
+
+<div class="row-fluid">
+    <div class="span6"><div id="country_highlight"></div></div>
+    <div class="span6"><div id="country_reactors"></div></div>
+</div>
+
 
 {% endblock %}
 

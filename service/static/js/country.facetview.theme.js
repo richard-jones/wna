@@ -26,9 +26,6 @@ jQuery(document).ready(function($) {
         // the facet view object to be appended to the page
         var thefacetview = '<div id="facetview"><div class="row-fluid"><div class="span12">';
 
-        thefacetview += "<span id='reactor_count'>COUNT</span> reactors with a net capacity of <span id='capacity'>CAPACITY</span> MWe "
-        thefacetview += "(the smallest being <span id='smallest_capacity'>SMALLEST</span> MWe and the largest <span id='largest_capacity'>LARGEST</span> MWe)"
-
         thefacetview += '<div class="row-fluid" style="margin-top: 50px"> \
                             <div class="span1">&nbsp;</div> \
                             <div class="span10"> \
@@ -47,10 +44,11 @@ jQuery(document).ready(function($) {
     }
 
     function highlight(options, context) {
-        $("#reactor_count", context).html(options.data.found)
-        $("#capacity", context).html(options.data.facets.capacity_net.total)
-        $("#smallest_capacity", context).html(options.data.facets.capacity_net.min)
-        $("#largest_capacity", context).html(options.data.facets.capacity_net.max)
+        $("#reactor_count").html(options.data.found)
+        $("#capacity").html(options.data.facets.capacity_net.total)
+        $("#smallest_capacity").html(options.data.facets.capacity_net.min)
+        $("#largest_capacity").html(options.data.facets.capacity_net.max)
+        $("#stat_display").show()
 
         function initialize(lat, lng, zoom) {
             var myLatlng = new google.maps.LatLng(lat,lng);
@@ -102,15 +100,19 @@ jQuery(document).ready(function($) {
 
     var facets2 = []
     facets2.push({'field': 'country.exact', 'display': 'Country', "hidden" : true})
+    facets2.push({'field': 'current_status.exact', 'display': 'Current Status', "hidden" : true})
     facets2.push({"field" : 'capacity_net', 'display' : 'Capacity Net', 'hidden' : true, "type" : "statistical"})
 
     $('#country_highlight').facetview({
-        debug: true,
+        debug: false,
         search_url : current_scheme + "//" + current_domain + "/query/reactor/_search",
         page_size : 700,
         fields: ["name", "location"],
         facets: facets2,
-        predefined_filters: {"country.exact" : [country]},
+        predefined_filters: {
+            "country.exact" : [country],
+            "current_status.exact" : ["Operational"]
+        },
         pushstate: false,
         render_the_facetview: highlightView,
         pre_render_callback: highlight
@@ -121,15 +123,13 @@ jQuery(document).ready(function($) {
 
         result += "<div class='row-fluid' style='margin-top: 10px; margin-bottom: 10px'>"
 
-        result += "<div class='span10'>"
+        result += "<div class='span8'>"
         result += "<strong style='font-size: 150%'><a href='/reactor/" + record["id"] + "'>" + record["name"] + "</a></strong><br>"
-        result += record["reactor_type"] + ", " + record["current_status"] + "<br><br>"
-        result += "<strong>process:</strong> " + record["process"] + " <strong>owner:</strong> " + record["owner"] + " <strong>operator:</strong> " + record["operator"]
+        result += record["reactor_type"]
         result += "</div>"
 
-        result += "<div class='span2'>"
-        result += "<strong style='font-size: 160%'>" + record["capacity_net"] + " MWe</strong><br>"
-        result += "Capacity Net"
+        result += "<div class='span4'>"
+        result += "<strong style='font-size: 160%'>" + record["capacity_net"] + " MWe</strong>"
         result += "</div></div>"
         result += options.resultwrap_end;
         return result;
@@ -137,17 +137,39 @@ jQuery(document).ready(function($) {
 
     var facets = []
     facets.push({'field': 'country.exact', 'display': 'Country', "hidden" : true})
+    facets.push({'field': 'current_status.exact', 'display': 'Current Status', "hidden" : true})
 
     $('#country_reactors').facetview({
         debug: false,
         search_url : current_scheme + "//" + current_domain + "/query/reactor/_search",
-        page_size : 25,
+        page_size : 10,
         facets: facets,
         sort: [{"name.exact" : {"order" : "asc"}}],
         render_result_record : discoveryRecordView,
         render_search_options : function() {return ""},
-        predefined_filters: {"country.exact" : [country]},
+        predefined_filters: {
+            "country.exact" : [country],
+            "current_status.exact" : ["Operational"]
+        },
         pushstate: false
+    });
+
+    $('#reportview-country-start-years').report({
+        debug: false,
+        type: "multibar",
+        search_url: current_scheme + "//" + current_domain + "/query/reactor/_search",
+        facets: [
+            {
+                "field" : "start_year",
+                "size" : 100,
+                "display" : "Start Year",
+                "order" : "term"
+            }
+        ],
+        fixed_filters : [
+            {"term" : {"country.exact" :  country}},
+            {"term" : {"current_status.exact" : "Operational"}}
+        ]
     });
 });
 

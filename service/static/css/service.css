@@ -32,3 +32,11 @@
 #reportview-top-models .reportview {
     height: 465px;
 }
+
+
+#reportview-country-start-years {
+    height:300px;
+}
+#reportview-country-start-years .reportview {
+    height: 370px;
+}
