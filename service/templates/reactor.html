@@ -3,12 +3,13 @@
 {% block content %}
 
 <h1>{{reactor.data.name}}</h1>
+<h2><a href="/country/{{reactor.data.country}}">{{reactor.data.country}}</a></h2>
 
 <div class="row-fluid">
     <div class="span6">
         <strong>process</strong>: {{reactor.data.process}}<br>
         <strong>owner</strong>: {{reactor.data.owner}}<br>
-        <strong>operator</strong>: {{reactor.data.operator}}
+        <strong>operator</strong>: <a href="/operator/{{reactor.data.operator|safe}}">{{reactor.data.operator}}</a>
     </div>
     <div class="span6">
         <div id="reportview-capacity"></div>

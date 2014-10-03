@@ -13,15 +13,69 @@ jQuery(document).ready(function($) {
         result += "<div class='span10'>"
         result += "<strong style='font-size: 150%'><a href='/reactor/" + record["id"] + "'>" + record["name"] + ", " + record["country"] + "</a></strong><br>"
         result += record["reactor_type"] + ", " + record["current_status"] + "<br><br>"
-        result += "<strong>process:</strong> " + record["process"] + " <strong>owner:</strong> " + record["owner"] + " <strong>operator:</strong> " + record["operator"]
+        result += "<strong>process:</strong> " + record["process"] + " <strong>owner:</strong> " + record["owner"] + " <strong>operator:</strong> " + record["operator"] + "<br>"
+        if (record["grid_connection"]) {
+            result += "<strong>grid connection:</strong> " + record["grid_connection"]
+        }
         result += "</div>"
 
         result += "<div class='span2'>"
-        result += "<strong style='font-size: 160%'>" + record["capacity_gross"] + " MWe</strong><br>"
-        result += "Capacity Gross"
+        result += "<strong style='font-size: 160%'>" + record["capacity_net"] + " MWe</strong>"
         result += "</div></div>"
         result += options.resultwrap_end;
         return result;
+    }
+
+    function customPager(options) {
+        /*****************************************
+         * overrides must provide the following classes and ids
+         *
+         * class: facetview_decrement - anchor to move the page back
+         * class: facetview_increment - anchor to move the page forward
+         * class: facetview_inactive_link - for links which should not have any effect (helpful for styling bootstrap lists without adding click features)
+         *
+         * should (not must) respect the config
+         *
+         * options.from - record number results start from (may be a string)
+         * options.page_size - number of results per page
+         * options.data.found - the total number of records in the search result set
+         */
+
+        // ensure our starting points are integers, then we can do maths on them
+        var from = parseInt(options.from)
+        var size = parseInt(options.page_size)
+
+        // calculate the human readable values we want
+        var to = from + size
+        from = from + 1 // zero indexed
+        if (options.data.found < to) { to = options.data.found }
+        var total = options.data.found
+
+        // forward and back-links, taking into account start and end boundaries
+        var backlink = '<a class="facetview_decrement">&laquo; back</a>'
+        if (from < size) { backlink = "<a class='facetview_decrement facetview_inactive_link'>..</a>" }
+
+        var nextlink = '<a class="facetview_increment">next &raquo;</a>'
+        if (options.data.found <= to) { nextlink = "<a class='facetview_increment facetview_inactive_link'>..</a>" }
+
+        var meta = '<div class="row-fluid"><div class="span8">'
+
+        // usual page navigation
+        meta += '<div class="pagination"><ul>'
+        meta += '<li class="prev">' + backlink + '</li>'
+        meta += '<li class="active"><a>' + from + ' &ndash; ' + to + ' of ' + total + '</a></li>'
+        meta += '<li class="next">' + nextlink + '</li>'
+        meta += "</ul></div>"
+
+        meta += '</div><div class="span4">'
+
+        // highlight of total number of reactors and total MWe
+        var mwe = undefined
+
+        meta += "<strong>" + total + "</strong> reactors selected, totalling"
+
+        meta += "</div></div>"
+        return meta
     }
 
     var facets = []
@@ -40,7 +94,7 @@ jQuery(document).ready(function($) {
         ]
     })
     facets.push({'field': 'country.exact', 'display': 'Country'})
-    facets.push({'field': 'current_status.exact', 'display': 'Current Status'})
+    facets.push({'field': 'current_status.exact', 'display': 'Current Status', "open" : true})
 
     facets.push({'field': 'process.exact', 'display': 'Process'})
     facets.push({'field': 'owner.exact', 'display': 'Owner'})
@@ -62,36 +116,6 @@ jQuery(document).ready(function($) {
         ]
     })
 
-    facets.push({
-        'field': 'capacity_gross',
-        'display': 'Capacity Gross (MWe)',
-        "type": "range",
-        "range" : [
-            {"to" : 300, "display" : "up to 300"},
-            {"from" : 300, "to" : 600, "display" : "300 - 600"},
-            {"from" : 600, "to" : 900, "display" : "600 - 900"},
-            {"from" : 900, "to" : 1200, "display" : "900 - 1200"},
-            {"from" : 1200, "display" : "1200+"}
-        ]
-    })
-
-    facets.push({
-        'field': 'capacity_thermal',
-        'display': 'Capacity Thermal (MWe)',
-        "type": "range",
-        "range" : [
-            {"to" : 1000, "display" : "up to 1000"},
-            {"from" : 1000, "to" : 2000, "display" : "1000 - 2000"},
-            {"from" : 2000, "to" : 3000, "display" : "2000 - 3000"},
-            {"from" : 3000, "to" : 4000, "display" : "3000 - 4000"},
-            {"from" : 4000, "display" : "4000+"}
-        ]
-    })
-
-    // output_life, range
-    // net_capacity_(wna), range
-    // capacity_factor_life, range
-
     $('#search_reactors').facetview({
         debug: false,
         search_url : current_scheme + "//" + current_domain + "/query/reactor/_search",
@@ -107,10 +131,14 @@ jQuery(document).ready(function($) {
             {'display':'Owner','field':'owner'},
             {'display':'Vendor','field':'vendor'},
             {'display':'Operator','field':'operator'},
-            {'display':'Model','field':'model'},
+            {'display':'Model','field':'model'}
         ],
-        render_result_record : discoveryRecordView
-
+        render_result_record : discoveryRecordView,
+        active_filters : {
+            "current_status.exact" : ["Operational"]
+        }//,
+        //exclude_predefined_filters_from_facets: false
+        // render_results_metadata : customPager
     });
 
 });
