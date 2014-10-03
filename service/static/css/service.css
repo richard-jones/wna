@@ -33,6 +33,13 @@
     height: 465px;
 }
 
+#reportview-top-operators {
+    height:500px;
+}
+#reportview-top-operators .reportview {
+    height: 465px;
+}
+
 
 #reportview-country-start-years {
     height:300px;

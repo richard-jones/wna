@@ -74,7 +74,7 @@ jQuery(document).ready(function($) {
         nds.push(op_series)
         options.data_series = nds
     }
-
+    /*
     $('#reportview-owner-operator').report({
         type: "horizontal_multibar",
         search_url: query_endpoint,
@@ -95,6 +95,7 @@ jQuery(document).ready(function($) {
         ],
         pre_render_callback: normaliseOwnerOperator
     });
+    */
 
     $('#reportview-top-countries').report({
         type: "pie",
@@ -104,7 +105,7 @@ jQuery(document).ready(function($) {
         facets: [
             {
                 "field" : "country.exact",
-                "size" : 100,
+                "size" : 10,
                 "display" : "Coutries with Reactors"
             }
         ]
@@ -117,11 +118,25 @@ jQuery(document).ready(function($) {
         pie_label_threshold: 0.06,
         facets: [
             {
-                "field" : "model.exact",
+                "field" : "process.exact",
                 "size" : 10,
-                "display" : "Models"
+                "display" : "Process"
             }
         ]
+    });
+
+    $('#reportview-top-operators').report({
+        type: "horizontal_multibar",
+        search_url: query_endpoint,
+        debug: false,
+        facets: [
+            {
+                "field" : "operator.exact",
+                "size" : 10,
+                "display" : "Operator"
+            }
+        ],
+        horizontal_multibar_margin_left: 300
     });
 
 });
