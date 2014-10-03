@@ -221,7 +221,7 @@ jQuery(document).ready(function($) {
             display = facet.value_function(display)
         }
         var url_root = facet.field === "country.exact" ? "/country/" : "/operator/"
-        var append = '<a href="' + url_root + result.term + '">' + display + ' (' + result.count + ')</a>'
+        var append = '<a href="' + url_root + encodeURIComponent(result.term) + '">' + display + ' (' + result.count + ')</a>'
 
         /*
         var append = '<tr class="facetview_filtervalue" style="display:none;"><td><a class="facetview_filterchoice' +

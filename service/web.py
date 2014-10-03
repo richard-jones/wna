@@ -31,7 +31,7 @@ def map():
 def nation(country):
     return render_template("country.html", country=country, map_key=app.config.get("GOOGLE_MAP_API_KEY"))
 
-@app.route("/operator/<op>")
+@app.route("/operator/<path:op>")
 def operator(op):
     return render_template("operator.html", operator=op, map_key=app.config.get("GOOGLE_MAP_API_KEY"))
 
