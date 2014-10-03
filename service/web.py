@@ -31,6 +31,14 @@ def map():
 def nation(country):
     return render_template("country.html", country=country, map_key=app.config.get("GOOGLE_MAP_API_KEY"))
 
+@app.route("/operator/<op>")
+def operator(op):
+    return render_template("operator.html", operator=op, map_key=app.config.get("GOOGLE_MAP_API_KEY"))
+
+@app.route("/list")
+def list_page():
+    return render_template("list.html")
+
 # this allows us to override the standard static file handling with our own dynamic version
 @app.route("/static/<path:filename>")
 def static(filename):

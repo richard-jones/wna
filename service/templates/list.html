@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div id="list_entities"></div>
+
+{% endblock %}
+
+{% block extra_js_bottom %}
+<script type="text/javascript" src="{{ url_for('static', filename='js/list.facetview.theme.js') }}"></script>
+{% endblock%}
+
+

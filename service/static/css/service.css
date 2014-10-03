@@ -40,3 +40,11 @@
 #reportview-country-start-years .reportview {
     height: 370px;
 }
+
+
+#reportview-operator-start-years {
+    height:300px;
+}
+#reportview-operator-start-years .reportview {
+    height: 370px;
+}

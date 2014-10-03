@@ -90,7 +90,6 @@ jQuery(document).ready(function($) {
 
         var mlat = midPoint(lats)
         var mlon = midPoint(lons)
-        // var zoom = zoomLevel(lats, lons)
 
         var gm = initialize(mlat, mlon, 5);
 
@@ -100,18 +99,18 @@ jQuery(document).ready(function($) {
     }
 
     var facets2 = []
-    facets2.push({'field': 'country.exact', 'display': 'Country', "hidden" : true})
+    facets2.push({'field': 'operator.exact', 'display': 'Operator', "hidden" : true})
     facets2.push({'field': 'current_status.exact', 'display': 'Current Status', "hidden" : true})
     facets2.push({"field" : 'capacity_net', 'display' : 'Capacity Net', 'hidden' : true, "type" : "statistical"})
 
-    $('#country_highlight').facetview({
+    $('#operator_highlight').facetview({
         debug: false,
         search_url : current_scheme + "//" + current_domain + "/query/reactor/_search",
         page_size : 700,
         fields: ["name", "location"],
         facets: facets2,
         predefined_filters: {
-            "country.exact" : [country],
+            "operator.exact" : [operator],
             "current_status.exact" : ["Operational"]
         },
         pushstate: false,
@@ -137,10 +136,10 @@ jQuery(document).ready(function($) {
     }
 
     var facets = []
-    facets.push({'field': 'country.exact', 'display': 'Country', "hidden" : true})
+    facets.push({'field': 'operator.exact', 'display': 'Operator', "hidden" : true})
     facets.push({'field': 'current_status.exact', 'display': 'Current Status', "hidden" : true})
 
-    $('#country_reactors').facetview({
+    $('#operator_reactors').facetview({
         debug: false,
         search_url : current_scheme + "//" + current_domain + "/query/reactor/_search",
         page_size : 10,
@@ -149,13 +148,13 @@ jQuery(document).ready(function($) {
         render_result_record : discoveryRecordView,
         render_search_options : function() {return ""},
         predefined_filters: {
-            "country.exact" : [country],
+            "operator.exact" : [operator],
             "current_status.exact" : ["Operational"]
         },
         pushstate: false
     });
 
-    $('#reportview-country-start-years').report({
+    $('#reportview-operator-start-years').report({
         debug: false,
         type: "multibar",
         search_url: current_scheme + "//" + current_domain + "/query/reactor/_search",
@@ -168,7 +167,7 @@ jQuery(document).ready(function($) {
             }
         ],
         fixed_filters : [
-            {"term" : {"country.exact" :  country}},
+            {"term" : {"operator.exact" :  operator}},
             {"term" : {"current_status.exact" : "Operational"}}
         ]
     });
