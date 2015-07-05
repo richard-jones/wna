@@ -107,7 +107,7 @@ jQuery(document).ready(function($) {
         debug: false,
         search_url : current_scheme + "//" + current_domain + "/query/reactor/_search",
         page_size : 700,
-        fields: ["name", "location"],
+        // fields: ["name", "location"],
         facets: facets2,
         predefined_filters: {
             "operator.exact" : [operator],

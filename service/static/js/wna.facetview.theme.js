@@ -134,9 +134,13 @@ jQuery(document).ready(function($) {
             {'display':'Model','field':'model'}
         ],
         render_result_record : discoveryRecordView,
+        pushstate: false,
         active_filters : {
             "current_status.exact" : ["Operational"]
         }//,
+        //predefined_filters : {
+        //    "current_status.exact" : ["Operational"]
+        //},
         //exclude_predefined_filters_from_facets: false
         // render_results_metadata : customPager
     });

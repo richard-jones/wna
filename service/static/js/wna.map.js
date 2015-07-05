@@ -16,12 +16,12 @@ jQuery(document).ready(function($) {
     function querySuccess(data) {
         for (var item = 0; item < data.hits.hits.length; item++) {
             var res = data.hits.hits[item]
-            if (res.fields.location) {
-                var myLatlng = new google.maps.LatLng(res.fields.location.lat, res.fields.location.lon);
+            if (res._source.location) {
+                var myLatlng = new google.maps.LatLng(res._source.location.lat, res._source.location.lon);
                 var marker = new google.maps.Marker({
                     position: myLatlng,
                     map: gm,
-                    title: res.fields.name
+                    title: res._source.name
                 });
             }
         }
@@ -30,7 +30,7 @@ jQuery(document).ready(function($) {
     var query = {
         "query" : { "match_all" : {} },
         "size" : 700,
-        "fields" : ["location", "name"]
+        "_source" : ["location", "name"]
     }
 
     doElasticSearchQuery({
